@@ -46,7 +46,8 @@ exports.calculatePrice = (req, res) => {
     }
 
     // Log the calculation for debugging/admin visibility
-    console.log(`[Price Check] Product: ${productId}, ZIP: ${cleanZip} -> Resolved Price: $${price}`);
+    const shopContext = req.shopify ? ` [Shop: ${req.shopify.shop}]` : '';
+    console.log(`[Price Check]${shopContext} Product: ${productId}, ZIP: ${cleanZip} -> Resolved Price: $${price}`);
 
     // 4. Send successful response
     return res.status(200).json({

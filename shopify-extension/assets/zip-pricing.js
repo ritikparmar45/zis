@@ -18,7 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function initZipPricingWidget(widget) {
   const productId = widget.getAttribute('data-product-id');
-  const apiUrl = widget.getAttribute('data-api-url') || 'http://localhost:5000/api/price';
+  let apiUrl = widget.getAttribute('data-api-url') || '/apps/zip-pricing/price';
+  
+  // Detect local testing environments (file:/// or localhost without Shopify storefront injection)
+  const isLocalDemo = window.location.protocol === 'file:' || 
+                      (window.location.hostname === 'localhost' && !window.Shopify) ||
+                      (window.location.hostname === '127.0.0.1' && !window.Shopify);
+                      
+  if (isLocalDemo && apiUrl.startsWith('/')) {
+    apiUrl = 'http://localhost:5000/api/price';
+    console.log(`[ZIP Pricing] Local demo environment detected. Re-routed relative App Proxy URL to local backend: ${apiUrl}`);
+  }
   
   // Find widget-scoped elements
   const widgetId = widget.id;

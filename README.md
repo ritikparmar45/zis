@@ -287,5 +287,32 @@ Below are indicators of the widget lifecycle visual layouts.
 
 ---
 
-## 9. Time Taken
-Approx. **2-3 Hours** (Setup, architecture design, server validation routes, Theme app block Liquid parameters, styling, JS storefront overrides, and documentation).
+## 9. Production-Ready Enhancements & Architectural Considerations
+
+While the current codebase represents a secure, high-performance integration using Shopify App Proxy, a production-grade SaaS application should implement the following architectural enhancements:
+
+### A. Dynamic Database-Driven Pricing Rules
+* **Current State**: Pricing rules and fallbacks are hardcoded in the backend controller (`priceController.js`).
+* **Production Solution**: Integrate a database (e.g., MongoDB, PostgreSQL) to store pricing zones. Rules should be dynamically configured by merchants inside an embedded Shopify Admin dashboard page, saving records indexed by `shop` domain.
+
+### B. Multi-Currency Support (Internationalization)
+* **Current State**: Storefront formatting defaults to USD currency formatting (`$1,499`).
+* **Production Solution**: Instead of hardcoding currency conversion parameters in client JS, retrieve the storefront's active currency dynamically. This can be achieved by:
+  1. Passing `{{ cart.currency.iso_code }}` or `{{ shop.currency }}` from the App Block Liquid settings.
+  2. Leveraging Shopify's global `Shopify.currency.active` object to format values dynamically using local symbol symbols (e.g., €, ₹, £).
+
+### C. Client-Side Session Caching
+* **Current State**: Navigating between product pages or reloading requires the customer to query the API repeatedly.
+* **Production Solution**: Cache the verified ZIP code and matching resolved discount/pricing multipliers in the browser's `sessionStorage`. Before making any outbound fetch requests to the proxy, check if a valid cached entry exists to minimize backend load and optimize response latency.
+
+### D. Storefront DOM Decoupling
+* **Current State**: Storefront price updates rely on matching pre-configured element selectors (e.g., `.price-item--regular`).
+* **Production Solution**: Custom Shopify themes or third-party page builders often change class structures. decouple price overrides by:
+  1. Publishing standard custom DOM events (e.g., `dispatchEvent(new CustomEvent('zip:price-updated'))`) which other theme components can listen to.
+  2. Utilizing Shopify's Product AJAX API to update cart line items dynamically.
+
+---
+
+## 10. Time Taken
+Approx. **3-4 Hours** (Setup, architecture design, server validation routes, Theme app block Liquid parameters, styling, JS storefront overrides, Shopify App Proxy HMAC security validation middleware, and documentation).
+

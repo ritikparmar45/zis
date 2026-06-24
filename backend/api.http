@@ -1,0 +1,51 @@
+### POST Check Pricing - ZIP Code 75028 (Special Price: $1499)
+POST http://localhost:5000/api/price
+Content-Type: application/json
+
+{
+  "zip": "75028",
+  "productId": "123"
+}
+
+###
+
+### POST Check Pricing - ZIP Code 10001 (Special Price: $1699)
+POST http://localhost:5000/api/price
+Content-Type: application/json
+
+{
+  "zip": "10001",
+  "productId": "123"
+}
+
+###
+
+### POST Check Pricing - ZIP Code 90210 (Special Price: $1799)
+POST http://localhost:5000/api/price
+Content-Type: application/json
+
+{
+  "zip": "90210",
+  "productId": "123"
+}
+
+###
+
+### POST Check Pricing - General ZIP Code (Fallback Price: $1999)
+POST http://localhost:5000/api/price
+Content-Type: application/json
+
+{
+  "zip": "94103",
+  "productId": "123"
+}
+
+###
+
+### POST Check Pricing - Error case (Missing ZIP)
+POST http://localhost:5000/api/price
+Content-Type: application/json
+
+{
+  "productId": "123"
+}

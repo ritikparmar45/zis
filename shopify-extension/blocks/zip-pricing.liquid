@@ -1,0 +1,167 @@
+<!--
+  Shopify ZIP Pricing Widget App Block
+  This block renders a ZIP code entry input and calculates custom prices for the product dynamically.
+-->
+
+{%- if product -%}
+  <div 
+    class="zip-pricing-container"
+    id="zip-pricing-{{ section.id }}-{{ block.id }}"
+    data-product-id="{{ product.id }}"
+    data-api-url="{{ block.settings.api_url }}"
+    style="
+      --zip-bg-color: {{ block.settings.bg_color }};
+      --zip-text-color: {{ block.settings.text_color }};
+      --zip-button-bg: {{ block.settings.button_bg_color }};
+      --zip-button-text: {{ block.settings.button_text_color }};
+      --zip-border-color: {{ block.settings.border_color }};
+      --zip-border-radius: {{ block.settings.border_radius }}px;
+    "
+  >
+    <div class="zip-pricing-wrapper">
+      {%- if block.settings.heading != blank -%}
+        <h4 class="zip-pricing-title">{{ block.settings.heading }}</h4>
+      {%- endif -%}
+      
+      {%- if block.settings.subheading != blank -%}
+        <p class="zip-pricing-subheading">{{ block.settings.subheading }}</p>
+      {%- endif -%}
+
+      <div class="zip-pricing-form">
+        <div class="zip-pricing-input-group">
+          <input 
+            type="text" 
+            id="zip-input-{{ section.id }}-{{ block.id }}"
+            class="zip-pricing-input" 
+            placeholder="{{ block.settings.placeholder }}" 
+            aria-label="Enter ZIP Code"
+            maxlength="10"
+            required
+          />
+          <button 
+            type="button" 
+            id="zip-button-{{ section.id }}-{{ block.id }}"
+            class="zip-pricing-button"
+          >
+            <span>{{ block.settings.button_text }}</span>
+            <div class="zip-spinner" aria-hidden="true"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- State Containers -->
+      <div class="zip-pricing-states">
+        <!-- Loading State -->
+        <div class="zip-state-loading zip-hidden" id="zip-loading-{{ section.id }}-{{ block.id }}">
+          <span class="zip-loading-text">Checking price...</span>
+        </div>
+
+        <!-- Success State -->
+        <div class="zip-state-success zip-hidden" id="zip-success-{{ section.id }}-{{ block.id }}">
+          <div class="zip-success-badge">Special Rate Available</div>
+          <p class="zip-success-message">
+            Price for ZIP <span class="zip-resolved-zip"></span>: 
+            <strong class="zip-resolved-price"></strong>
+          </p>
+        </div>
+
+        <!-- Error State -->
+        <div class="zip-state-error zip-hidden" id="zip-error-{{ section.id }}-{{ block.id }}">
+          <svg class="zip-error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span class="zip-error-text"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "ZIP Price Checker",
+  "target": "section",
+  "templates": ["product"],
+  "stylesheet": "zip-pricing.css",
+  "javascript": "zip-pricing.js",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Title",
+      "default": "Check Dynamic Price"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Enter your ZIP code to see if local pricing adjustments apply."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Input Placeholder",
+      "default": "Enter ZIP Code (e.g. 75028)"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "Check Price"
+    },
+    {
+      "type": "text",
+      "id": "api_url",
+      "label": "Backend API Endpoint URL",
+      "default": "http://localhost:5000/api/price",
+      "info": "Ensure CORS is configured correctly on the backend server for your shop domain."
+    },
+    {
+      "type": "header",
+      "content": "Aesthetic Settings"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#e3e3e3"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Radius",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}

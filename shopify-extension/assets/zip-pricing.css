@@ -1,0 +1,248 @@
+/* ==========================================================================
+   Shopify ZIP Pricing Widget Style Sheet
+   Designed with premium, responsive, and modern visual design principles.
+   ========================================================================== */
+
+/* Container & Box Model */
+.zip-pricing-container {
+  font-family: "Outfit", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--zip-bg-color, #f9f9f9);
+  color: var(--zip-text-color, #121212);
+  border: 1px solid var(--zip-border-color, #e3e3e3);
+  border-radius: var(--zip-border-radius, 8px);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  max-width: 480px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+}
+
+.zip-pricing-container:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.zip-pricing-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Typography */
+.zip-pricing-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--zip-text-color, #121212);
+}
+
+.zip-pricing-subheading {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.6);
+  /* Fallback color if container text color is light */
+}
+
+/* Form Elements */
+.zip-pricing-form {
+  width: 100%;
+}
+
+.zip-pricing-input-group {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.zip-pricing-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background-color: #ffffff;
+  color: #121212;
+  border: 1px solid var(--zip-border-color, #e3e3e3);
+  border-radius: calc(var(--zip-border-radius, 8px) - 2px);
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.zip-pricing-input:focus {
+  border-color: var(--zip-button-bg, #121212);
+  box-shadow: 0 0 0 3px rgba(18, 18, 18, 0.1);
+}
+
+/* Button & Loading Animation */
+.zip-pricing-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 550;
+  font-family: inherit;
+  background-color: var(--zip-button-bg, #121212);
+  color: var(--zip-button-text, #ffffff);
+  border: none;
+  border-radius: calc(var(--zip-border-radius, 8px) - 2px);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 120px;
+}
+
+.zip-pricing-button:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.zip-pricing-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.zip-pricing-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+.zip-spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--zip-button-text, #ffffff);
+  animation: zip-spin 0.6s linear infinite;
+  margin-left: 8px;
+}
+
+.zip-loading .zip-spinner {
+  display: inline-block;
+}
+
+/* State Panels */
+.zip-pricing-states {
+  margin-top: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.zip-hidden {
+  display: none !important;
+}
+
+/* Loading State Text */
+.zip-state-loading {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: zip-pulse 1.5s infinite ease-in-out;
+}
+
+/* Success State Styles */
+.zip-state-success {
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.08) 0%, rgba(39, 174, 96, 0.03) 100%);
+  border-left: 4px solid #27ae60;
+  padding: 0.85rem 1rem;
+  border-radius: 4px;
+  animation: zip-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.zip-success-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: #27ae60;
+  color: #ffffff;
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+  margin-bottom: 0.4rem;
+}
+
+.zip-success-message {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.zip-resolved-price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #27ae60;
+  margin-left: 2px;
+}
+
+/* Error State Styles */
+.zip-state-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(231, 76, 60, 0.08);
+  border-left: 4px solid #e74c3c;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  color: #c0392b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  animation: zip-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.zip-error-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Animations */
+@keyframes zip-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes zip-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes zip-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsiveness */
+@media screen and (max-width: 480px) {
+  .zip-pricing-container {
+    padding: 1.25rem;
+    margin: 1rem 0;
+  }
+  
+  .zip-pricing-input-group {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .zip-pricing-button {
+    width: 100%;
+    padding: 0.85rem;
+  }
+}
